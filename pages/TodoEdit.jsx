@@ -1,7 +1,7 @@
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-import { INCREASE_USER_BALANCE } from "../store/store.js"
+import { INCREASE_USER_BALANCE } from "../store/user-reduser.js"
 import { userService } from "../services/user.service.js"
 
 const { useState, useEffect } = React
@@ -11,7 +11,7 @@ const { useSelector,useDispatch } = ReactRedux
 export function TodoEdit() {
 
     const [todoToEdit, setTodoToEdit] = useState(todoService.getEmptyTodo())
-    const loggedInUser = useSelector(storeState => storeState.loggedInUser)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
 
     userService.query()
     .then(users => console.log('users', users))

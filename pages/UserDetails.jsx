@@ -6,10 +6,11 @@ const { useSelector } = ReactRedux
 
 export function UserDetails() {
     
-    const loggedInUser = useSelector(storeState => storeState.loggedInUser)
-
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    
     console.log('logged in user:', loggedInUser)
-    const [userDetails, setUserDetails] = useState({
+    
+     const [userDetails, setUserDetails] = useState({
         name: '',
         color: '',
         bgColor: ''
