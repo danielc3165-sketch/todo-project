@@ -1,6 +1,5 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
-import { userService } from './user.service.js'
 
 const TODO_KEY = 'todoDB'
 _createTodos()

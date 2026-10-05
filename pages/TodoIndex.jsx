@@ -7,7 +7,7 @@ import { userService } from "../services/user.service.js"
 
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-import { SET_IS_LOADING, SET_FILTER_BY } from "../store/store.js"
+import { SET_IS_LOADING, SET_FILTER_BY } from "../store/todo-reducer.js"
 
 import { loadTodos,removeTodo,saveTodo } from "../store/actions/todo.js"
 
@@ -20,21 +20,18 @@ const { useState } = React
 
 export function TodoIndex() {
 
-    const todos= useSelector(storeState => storeState.todos)
-    const loggedInUser = useSelector(storeState => storeState.loggedInUser)
+    const todos= useSelector(storeState => storeState.todoModule.todos)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
     const [colors, setColors] = useState()
-    //console.log('colors:', colors)
-
-    userService.query()
-    .then(users => console.log('users', users))
     
+
     console.log('logged in user:',loggedInUser)
     //const isLoading= useSelector(storeState => storeState.isLoading)
     
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
     const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
-    const filterBy= useSelector(storeState => storeState.currFilterBy)
+    const filterBy= useSelector(storeState => storeState.todoModule.currFilterBy)
     
     const dispatch = useDispatch()
 

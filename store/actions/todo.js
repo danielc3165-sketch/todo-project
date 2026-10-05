@@ -1,4 +1,5 @@
-import { SET_TODOS, REMOVE_TODO, ADD_TODO, EDIT_TODO ,store } from "../store.js"
+import { store } from "../store.js"
+import { SET_TODOS, REMOVE_TODO, ADD_TODO, EDIT_TODO } from "../todo-reducer.js"
 import { todoService } from "../../services/todo.service.js"
 
 export function loadTodos(filterBy) {
