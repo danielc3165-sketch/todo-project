@@ -9,6 +9,7 @@ export const SET_FILTER_BY = 'SET_FILTER_BY'
 export const SET_LOGGEDIN_USER = 'SET_LOGGEDIN_USER'
 export const INCREASE_USER_BALANCE = 'INCREASE_USER_BALANCE'
 
+
 const initialState = {
     todos: [],
     isLoading : false,
@@ -23,7 +24,7 @@ export function todoReducer(state = initialState, cmd = {}) {
     switch (cmd.type) {
         case SET_TODOS:
             return { ...state, todos: cmd.todos }
-
+        
         case REMOVE_TODO:
             return { ...state, todos: state.todos.filter(todo => todo._id !== cmd.todoId) }
         

@@ -20,6 +20,9 @@ window.cs = todoService
 function query(filterBy = {}) {
     return storageService.query(TODO_KEY)
         .then(todos => {
+
+            console.log(todos)
+
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
                 todos = todos.filter(todo => regExp.test(todo.txt))
@@ -27,6 +30,11 @@ function query(filterBy = {}) {
 
             if (filterBy.importance) {
                 todos = todos.filter(todo => todo.importance >= filterBy.importance)
+            }
+
+            if(filterBy.isDone){
+                if(filterBy.isDone==='active') todos=todos.filter(todo=>!todo.isDone)
+                else todos=todos.filter(todo=>todo.isDone)
             }
 
             return todos

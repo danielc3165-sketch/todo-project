@@ -7,14 +7,15 @@ import { userService } from '../services/user.service.js'
 import { UserMsg } from "./UserMsg.jsx"
 import { LoginSignup } from './LoginSignup.jsx'
 import { showErrorMsg } from '../services/event-bus.service.js'
-import { SET_LOGGEDIN_USER } from '../store/user-reduser.js'
+
+import { SET_LOGGEDIN_USER } from '../store/user-reducer.js'
 
 import { logout } from '../store/actions/user.js'
 
 export function AppHeader() {
     const navigate = useNavigate()
     //const [user, setUser] = useState(userService.getLoggedinUser())
-    const user = useSelector(storeState => storeState.userModule.loggedinUser)
+    const user = useSelector(storeState => storeState.userModule.loggedInUser)
 
     const dispatch = useDispatch()
 
@@ -46,10 +47,11 @@ export function AppHeader() {
                     </ section >
                 ) : (
                     <section>
-                        <LoginSignup onSetUser={onSetUser} />
+                        <LoginSignup />
                     </section>
                 )}
                 <nav className="app-nav">
+                    {user && <NavLink to="/user/details" >Profile</NavLink>}
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>
                     <NavLink to="/todo" >Todos</NavLink>

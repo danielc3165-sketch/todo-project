@@ -53,6 +53,12 @@ export function TodoFilter({ loadTodos}) {
                 <input value={importance} onChange={handleChange}
                     type="number" placeholder="By Importance" id="importance" name="importance"
                 />
+                 
+                <select type="select" name="isDone" onChange={handleChange}>
+                 <option value="all">All</option>
+                 <option value="active">Active</option>
+                 <option value="done">Done</option>
+                </select>
 
                 <button hidden>Set Filter</button>
             </form>

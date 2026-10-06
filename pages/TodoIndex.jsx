@@ -21,12 +21,10 @@ const { useState } = React
 export function TodoIndex() {
 
     const todos= useSelector(storeState => storeState.todoModule.todos)
-    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
     const [colors, setColors] = useState()
     
-
-    console.log('logged in user:',loggedInUser)
-    //const isLoading= useSelector(storeState => storeState.isLoading)
+    //console.log('logged in user:',loggedInUser)
     
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
@@ -35,7 +33,6 @@ export function TodoIndex() {
     
     const dispatch = useDispatch()
 
-    //const [filterBy, setFilterBy] = useState(defaultFilter)
 
      useEffect(() => {
         dispatch({ type: SET_FILTER_BY, defaultFilter }) 
@@ -46,6 +43,7 @@ export function TodoIndex() {
     useEffect(() => {
         dispatch({ type: SET_FILTER_BY, filterBy })
         setSearchParams(filterBy)
+        console.log('F',filterBy)
         loadTodos(filterBy)
     }, [filterBy])
 
@@ -60,9 +58,8 @@ export function TodoIndex() {
 
     function onToggleTodo(todo) {
         const todoToSave = { ...todo, isDone: !todo.isDone }
-        todoService.save(todoToSave)
+        saveTodo(todoToSave)
             .then((savedTodo) => {
-                setTodos(prevTodos => prevTodos.map(currTodo => (currTodo._id !== todo._id) ? currTodo : { ...savedTodo }))
                 showSuccessMsg(`Todo is ${(savedTodo.isDone)? 'done' : 'back on your list'}`)
             })
             .catch(err => {
@@ -75,7 +72,7 @@ export function TodoIndex() {
         if (!loggedInUser) return 
         return userService.getById(loggedInUser._id)
         .then(user => {
-            console.log('user', user)
+            //console.log('user', user)
             setColors({bgColor: user.bgColor,color: user.color})
         })
     }

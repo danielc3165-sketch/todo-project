@@ -1,5 +1,5 @@
 import { todoReducer } from "./todo-reducer.js"
-import { userReducer } from "./user-reduser.js"
+import { userReducer } from "./user-reducer.js"
 
 const { combineReducers, createStore } = Redux
 

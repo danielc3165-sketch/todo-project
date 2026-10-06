@@ -1,8 +1,9 @@
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
-import { INCREASE_USER_BALANCE } from "../store/user-reduser.js"
+import { INCREASE_USER_BALANCE } from "../store/user-reducer.js"
 import { userService } from "../services/user.service.js"
+import { saveTodo } from "../store/actions/todo.js"
 
 const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
@@ -11,7 +12,7 @@ const { useSelector,useDispatch } = ReactRedux
 export function TodoEdit() {
 
     const [todoToEdit, setTodoToEdit] = useState(todoService.getEmptyTodo())
-    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
 
     userService.query()
     .then(users => console.log('users', users))
@@ -53,7 +54,7 @@ export function TodoEdit() {
 
     function onSaveTodo(ev) {
         ev.preventDefault()
-        todoService.save(todoToEdit)
+        saveTodo(todoToEdit)
             .then((savedTodo) => {
                 navigate('/todo')
                 showSuccessMsg(`Todo Saved (id: ${savedTodo._id})`)

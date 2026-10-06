@@ -1,14 +1,13 @@
 
 import { userService } from "../services/user.service.js"
 
-const { useState } = React
+const { useState,useEffect } = React
 const { useSelector } = ReactRedux
 
 export function UserDetails() {
     
-    const loggedInUser = useSelector(storeState => storeState.userModule.loggedinUser)
-    
-    console.log('logged in user:', loggedInUser)
+    const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
+    const [activities,setActivities] = useState([])
     
      const [userDetails, setUserDetails] = useState({
         name: '',
@@ -16,8 +15,14 @@ export function UserDetails() {
         bgColor: ''
     })
 
+    useEffect(()=>{
+        
+        getActivities()
+    
+    },[loggedInUser])
+
+
     function onSaveUserDetails(ev) {
-        console.log('its working') 
         ev.preventDefault()
         userService.getById(loggedInUser._id)
         .then(user => {
@@ -28,12 +33,16 @@ export function UserDetails() {
         })
     }
 
-
-    
-
     function handleChange({ target }) {
         const { name, value } = target
         setUserDetails(prevUserDetails => ({ ...prevUserDetails, [name]: value }))
+    }
+    
+    function getActivities(){
+        return userService.getById(loggedInUser._id)
+        .then (user=>{
+            setActivities(user.activities)
+        })
     }
     
     if (!loggedInUser) return <div>Loading...</div>
@@ -52,5 +61,16 @@ export function UserDetails() {
         </div>
         <button>Save</button>
     </form>
+         <div>
+            <p>Activities:</p>
+            <ul>
+                {activities.map(act=> <li  key={act.todoId}>
+                   <p>Activity: {act.txt}</p>
+                   <p>Date: {act.createdAt}</p>
+                   <p>Todo ID: {act.todoId}</p>
+                 </li>   
+                )}
+            </ul>
+         </div>
     </section>
 }
