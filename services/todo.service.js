@@ -34,7 +34,7 @@ function query(filterBy = {}) {
 
             if(filterBy.isDone){
                 if(filterBy.isDone==='active') todos=todos.filter(todo=>!todo.isDone)
-                else todos=todos.filter(todo=>todo.isDone)
+                else if(filterBy.isDone==='done') todos=todos.filter(todo=>todo.isDone)
             }
 
             return todos
