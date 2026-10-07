@@ -1,0 +1,9 @@
+.loader {
+    width: fit-content;
+    justify-self: center;
+}
+
+.loader > img{
+    height: 200px;
+    margin-top: 200px;
+}

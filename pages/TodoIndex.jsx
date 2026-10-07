@@ -1,6 +1,7 @@
 import { TodoFilter } from "../cmps/TodoFilter.jsx"
 import { TodoList } from "../cmps/TodoList.jsx"
 import { DataTable } from "../cmps/data-table/DataTable.jsx"
+import { Loader } from "../cmps/Loader.jsx"
 
 import { todoService } from "../services/todo.service.js"
 import { userService } from "../services/user.service.js"
@@ -22,9 +23,10 @@ export function TodoIndex() {
 
     const todos= useSelector(storeState => storeState.todoModule.todos)
     const loggedInUser = useSelector(storeState => storeState.userModule.loggedInUser)
+    const isLoading = useSelector(storeState => storeState.todoModule.isLoading)
     const [colors, setColors] = useState()
     
-    //console.log('logged in user:',loggedInUser)
+    console.log('isloading',isLoading )
     
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
@@ -43,7 +45,6 @@ export function TodoIndex() {
     useEffect(() => {
         dispatch({ type: SET_FILTER_BY, filterBy })
         setSearchParams(filterBy)
-        console.log('F',filterBy)
         loadTodos(filterBy)
     }, [filterBy])
 
@@ -81,7 +82,8 @@ export function TodoIndex() {
     
    
     
-    if (!todos){ {dispatch({ type: SET_IS_LOADING, isLoading: true })} return <div>Loading...</div> }
+    if (isLoading)  return <Loader />
+    if (todos.length===0) {return <p>no todos to show..</p>} 
     else dispatch({ type: SET_IS_LOADING, isLoading: false })
     return (
         <section style={colors ? { backgroundColor: colors.bgColor } : {}} className="todo-index">
